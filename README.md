@@ -1,2 +1,4 @@
 # SortVisualizer
-JavaFX application for demostration of different sorting algorythms.
+JavaFX application for demonstration of different sorting algorithms.
+### Features
+### Screenshots

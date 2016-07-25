@@ -34,7 +34,7 @@ public class ChartDrawer {
                 "Bubble sort",      //Пузырьковая сортировка (обменом)
                 "Insertion sort",   //Простыми вставками
                 "Selection sort",   //Выбором
-                "Cocktail sort",     //Перемешиванием (разновидность пузырьковой)
+                "Cocktail sort",    //Перемешиванием (разновидность пузырьковой)
                 "Quick sort"        //Быстрая сортировка
         );
     }

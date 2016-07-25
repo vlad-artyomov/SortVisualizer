@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import java.util.Random;
 
 public class ChartDrawer {
+    private LineChart chart;
     private ObservableList<XYChart.Data<Integer, Integer>> data;
     private ObservableList<String> sortAlgs;
     private int n;
@@ -23,12 +24,13 @@ public class ChartDrawer {
     public ChartDrawer(LineChart chart, TextField result, int n) {
         this.n = n;
         this.result = result;
+        this.chart = chart;
         XYChart.Series series = new XYChart.Series();
 
         data = FXCollections.observableArrayList();
         series.setName("Array");
         series.setData(data);
-        chart.getData().add(series);
+        this.chart.getData().add(series);
 
         sortAlgs = FXCollections.observableArrayList(
                 "Bubble sort",      //Пузырьковая сортировка (обменом)
@@ -54,7 +56,10 @@ public class ChartDrawer {
             for (int i = data.size(); i < n; i++)
                 data.add(new XYChart.Data(i, random.nextInt(101)));
         } else {
-            data.remove(n, data.size() - 1);
+            //Bug in XYChart.Series.getData().clear() throws IndexOutOfBoundsException
+            chart.setAnimated(false);
+            data.remove(n, data.size());
+            chart.setAnimated(true);
             for (int i = 0; i < n; i++)
                 data.get(i).setYValue(random.nextInt(101));
         }

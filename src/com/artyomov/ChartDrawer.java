@@ -54,7 +54,7 @@ public class ChartDrawer {
             for (int i = data.size(); i < n; i++)
                 data.add(new XYChart.Data(i, random.nextInt(101)));
         } else {
-            data.remove(n, data.size());
+            data.remove(n, data.size() - 1);
             for (int i = 0; i < n; i++)
                 data.get(i).setYValue(random.nextInt(101));
         }

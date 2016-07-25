@@ -11,21 +11,19 @@ import javafx.scene.control.TextField;
 import java.util.Random;
 
 public class ChartDrawer {
-    private LineChart chart;
-    private XYChart.Series series;
     private ObservableList<XYChart.Data<Integer, Integer>> data;
     private ObservableList<String> sortAlgs;
     private int n;
     private long delay = 0;
     private TextField result;
+    private Thread th;
 
     Random random = new Random();
 
     public ChartDrawer(LineChart chart, TextField result, int n) {
-        this.chart = chart;
         this.n = n;
         this.result = result;
-        series = new XYChart.Series();
+        XYChart.Series series = new XYChart.Series();
 
         data = FXCollections.observableArrayList();
         series.setName("Array");
@@ -42,6 +40,10 @@ public class ChartDrawer {
     }
 
     public void mix() {
+        if (th != null) {
+            if (th.isAlive()) th.interrupt();
+        }
+
         if (data.isEmpty())
             for (int i = 0; i < n; i++)
                 data.add(new XYChart.Data(i, random.nextInt(101)));
@@ -59,7 +61,10 @@ public class ChartDrawer {
     }
 
     public void sort(int algorithmIndex) {
-        Thread th;
+        if (th != null) {
+            if (th.isAlive()) th.interrupt();
+        }
+
         switch (algorithmIndex) {
             case 0: //Bubble sort
                 result.setText(String.valueOf(new SortBenchmark(data).bubbleSort()) + " ms");

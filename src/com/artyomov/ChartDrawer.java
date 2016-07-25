@@ -16,7 +16,7 @@ public class ChartDrawer {
     private int n;
     private long delay = 0;
     private TextField result;
-    private Thread th;
+    private Thread thread;
 
     Random random = new Random();
 
@@ -40,8 +40,8 @@ public class ChartDrawer {
     }
 
     public void mix() {
-        if (th != null) {
-            if (th.isAlive()) th.interrupt();
+        if (thread != null) {
+            if (thread.isAlive()) thread.interrupt();
         }
 
         if (data.isEmpty())
@@ -61,47 +61,47 @@ public class ChartDrawer {
     }
 
     public void sort(int algorithmIndex) {
-        if (th != null) {
-            if (th.isAlive()) th.interrupt();
+        if (thread != null) {
+            if (thread.isAlive()) thread.interrupt();
         }
 
         switch (algorithmIndex) {
             case 0: //Bubble sort
                 result.setText(String.valueOf(new SortBenchmark(data).bubbleSort()) + " ms");
-                th = new Thread(bubbleSort());
-                th.setDaemon(true);
-                th.start();
+                thread = new Thread(bubbleSort());
+                thread.setDaemon(true);
+                thread.start();
                 break;
             case 1: //Insertion sort
                 result.setText(String.valueOf(new SortBenchmark(data).insertionSort()) + " ms");
-                th = new Thread(insertionSort());
-                th.setDaemon(true);
-                th.start();
+                thread = new Thread(insertionSort());
+                thread.setDaemon(true);
+                thread.start();
                 break;
 
             case 2: //Selection sort
                 result.setText(String.valueOf(new SortBenchmark(data).selectionSort()) + " ms");
-                th = new Thread(selectionSort());
-                th.setDaemon(true);
-                th.start();
+                thread = new Thread(selectionSort());
+                thread.setDaemon(true);
+                thread.start();
                 break;
 
             case 3: //Cocktail sort
                 result.setText(String.valueOf(new SortBenchmark(data).cocktailSort()) + " ms");
-                th = new Thread(cocktailSort());
-                th.setDaemon(true);
-                th.start();
+                thread = new Thread(cocktailSort());
+                thread.setDaemon(true);
+                thread.start();
                 break;
 
             case 4: //Quick sort
                 result.setText(String.valueOf(new SortBenchmark(data).quickSort()) + " ms");
-                th = new Thread(quickSort());
-                th.setDaemon(true);
-                th.start();
+                thread = new Thread(quickSort());
+                thread.setDaemon(true);
+                thread.start();
                 break;
 
             default:
-                System.out.println("Invalid algorithm");
+                System.err.println("Invalid algorithm");
                 break;
         }
     }
